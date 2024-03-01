@@ -14,10 +14,10 @@ function gameBoard() {
     const getBoard = () => board;
 
     const placeMark = (row, index, mark) => {
-        const isCellEmpty = board[row][index].getValue() === '';
+        /*const isCellEmpty = board[row][index].getValue() === '';
 
-        if (!isCellEmpty) return 'cancel';
-
+        if (!isCellEmpty) return 'cancel'; 
+            */
         board[row][index].addMark(mark);
 
     }
@@ -47,6 +47,7 @@ function createPlayer(name, mark) {
 }
 
 // Here we control the flow of the game using the above functions//
+let roundCount = 0;
 function gameController() {
     const pappa = createPlayer('Pappa', 'X');
     const leia = createPlayer('Leia', 'O');
@@ -73,7 +74,7 @@ function gameController() {
             return;
         }
 
-        let roundCount = 0;
+        
         roundCount++;
 
         console.log(
@@ -81,7 +82,7 @@ function gameController() {
         );
         board.placeMark(row, index, getActivePlayer().mark);
     
-        if (roundCount = 5) {
+        if (roundCount === 5) {
             for (let i = 0; i < 3; i++) {
                 for (let j = 0; j < 3; j++) {
                     if (board2[i][0].getValue() === board2[i][1].getValue()
@@ -119,10 +120,65 @@ function gameController() {
         return { playRound, getActivePlayer, getBoard: board.getBoard };
     }
 
-const game = gameController();
 
-/*function screenController() {
+function screenController() {
     const game = gameController();
     const display = document.querySelector('.display');
     const gamePad = document.querySelector('.game-pad');
-}*/
+
+    const updateScreen = () => {
+        gamePad.textContent = '';
+
+        const board = game.getBoard();
+        const activePlayer = game.getActivePlayer();
+
+        display.textContent = `${activePlayer.name}'s turn...`;
+        let data = 0;
+        board.forEach(row => {
+            row.forEach((cell, index) => {
+              const cellButton = document.createElement("button");
+              cellButton.classList.add("cell");
+              cellButton.setAttribute('id', data++);
+              cellButton.textContent = cell.getValue();
+              gamePad.appendChild(cellButton);
+            })
+          })
+    }
+    function clickHandlerBoard(e) {
+        const selectedCell = e.target.id;
+        /*let round = game.playRound();*/
+        if (e.target.textContent === 'X' || e.target.textContent === 'O') return;
+        if (!selectedCell) return;
+        let row;
+        let newId;
+    
+        if (selectedCell >= 0 && selectedCell < 3) {
+          row = 0;
+          game.playRound(row, selectedCell);
+        } else if (selectedCell >= 3 && selectedCell < 6) {
+          newId = selectedCell - 3;
+          row = 1;
+          game.playRound(row, newId);
+        } else if (selectedCell >= 6 && selectedCell < 9) {
+          newId = selectedCell - 6;
+          row = 2;
+          game.playRound(row, newId);
+        }
+    
+        /*if (round === 'Player1') {
+          display.textContent = 'Player 1 wins!';
+          return;
+        } else if (round === 'Player2') {
+          display.textContent = 'Player 2 wins!';
+          return;
+        }*/
+    
+        updateScreen();
+      }
+      gamePad.addEventListener("click", clickHandlerBoard);
+    
+      // Initial render
+      updateScreen();
+}
+
+screenController();
