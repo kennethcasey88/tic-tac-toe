@@ -2,10 +2,15 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: black;
 }
 
 h1 {
-    color: yellow;
+    color: darkmagenta;
+}
+
+.display {
+    color: darkmagenta;
 }
 
 .container {
@@ -14,13 +19,13 @@ h1 {
     align-items: center;
     width: 400px;
     height: 400px;
-    border: 1px solid black;
+    border: 1px solid purple;
 }
 
 .game-pad {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    border: 1px solid black;
+    border: 1px solid darkmagenta;
     width: 99%;
     height: 60%;
     
@@ -29,6 +34,8 @@ h1 {
 .cell {
     border: 1px solid black;
     display: flex;
+    font-size: 2em;
     align-items: center;
     justify-content: center;
+    background-color: darkmagenta;
 }

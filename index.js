@@ -116,7 +116,7 @@ function gameBoard() {
       
       printNewRound();
       let board2 = board.getBoard();
-        if (roundCount === 5) {
+        /*if (roundCount === 5) {*/
             for (let i = 0; i < 3; i++) {
                 for (let j = 0; j < 3; j++) {
                     if (board2[i][0].getValue() === board2[i][1].getValue()
@@ -142,7 +142,7 @@ function gameBoard() {
                     } 
                 }
             }
-        } else if (roundCount === 9 && (!board2.some(row => row.includes('')))) {
+        /*}*/ if (roundCount === 9 && (!board2.some(row => row.includes('')))) {
           return switchTie();
         }
         
